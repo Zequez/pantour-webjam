@@ -1,0 +1,271 @@
+:yaml
+  ICON: ❄️
+  
+  FLIERS:
+    - https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=200&q=70
+    - https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=70
+  
+  EQUIPO:
+    - name: León
+      img: https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=70
+      src:
+      tags: ["Director"]
+    - name: Luccard
+      img: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=70
+      src:
+      tags: ["Manifestador"]
+    - name: Córali
+      img: https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=200&q=70
+      src:
+      tags: ['Atención']
+  
+  ESPACIOS:
+    - name: Piscina
+      img: 'https://images.unsplash.com/photo-1776763019060-fa0663574ae6?auto=format&fit=crop&w=1600&q=80'
+      color: sky
+      activities: ['Aqua-gym', 'Matronatación', 'Pileta Libre', 'Pileta Escuela']
+  
+    - name: Dojo
+      img: 'https://images.unsplash.com/photo-1555597673-b21d5c935865?auto=format&fit=crop&w=1600&q=80'
+      color: red
+      activities: ['Judo', 'Playfight', 'Rage Club', 'Fear Club', 'Teatro', 'Kung-fu']
+  
+    - name: Campo
+      img: 'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?auto=format&fit=crop&w=1600&q=80'
+      color: lime
+      activities: ['Cancha Libre', 'Fútbol Escuela', 'Hockey Escuela']
+  
+    - name: Cafetería
+      img: 'https://images.unsplash.com/photo-1765341448915-856e14ffa1e6?auto=format&fit=crop&fm=jpg&q=80&w=1600'
+      color: amber
+      activities: ['Academia Web', 'Co-working']
+
+// # MIXINS
+
+mixin EmojiFavicon(emoji)
+  link(
+    rel="icon"
+    type="image/svg+xml"
+    href=`data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">${emoji}</text></svg>`
+  )
+
+mixin Page(title)
+  html
+    head
+      title= [title, TITLE].filter((t) => t).join(' - ')
+      meta(charset="utf-8")
+      meta(name="viewport" content="width=device-width, initial-scale=1.0")
+      +EmojiFavicon(ICON)
+    body(bg-sky-200 flex-cc flex-col)
+      block
+
+mixin Space(title, imgSrc)
+  a(h-50 rounded-2.5 bg-white p1.5 class="group" focus-visible="bg-sky-500" outline-0 overflow-hidden shadow-sm relative href="/piscina")
+    div(size-full relative overflow-hidden rounded-2 corner class="[corner-shape:bevel]")
+      // a(absolute inset-0 z-11 hover="bg-white/10"  class="peer" rounded-2.5 shadow="[inset_0_0_1px_4px_#ffff]")
+      h2(relative p4 group-hover:py6 group-focus-visible:py6 duration-500 transition-all z-10 text-10/12 b-b="2px black/30" font-serif text-white bg="black/40" text-shadow="[0_1.5px_0_#000]")= title
+      img(absolute size-full top-0 left-0 z-9 src=imgSrc object-cover group-hover="saturate-100 scale-120" group-focus-visible="saturate-100 scale-120" transition-all brightness-180 saturate-40)
+
+mixin Space2(title, imgSrc, spaceColor = "sky", activities = [])
+  div(flex flex-col)
+    a(h-50 rounded-2.5 bg-white p1.5 class="group" focus-visible="bg-sky-500" outline-0 overflow-hidden shadow-sm relative href="/piscina")
+      div[size-full flex-cc relative overflow-hidden rounded-2 corner [corner-shape:bevel]]
+        h2[absolute rounded-full py2 px4 group-hover:scale-120 group-focus-visible:scale-120 duration-500 transition-transform z-10 text-7/8 text-center b-b-(2px black/30) font-serif text-white bg-black/60 text-shadow-[0_1.5px_0_#000]]= title
+        img(absolute size-full top-0 left-0 z-9 src=imgSrc object-cover group-hover="saturate-100 scale-120" group-focus-visible="saturate-100 scale-120" transition-all brightness-180 saturate-40)
+    div(px-3)
+      div(mx-auto h-full bg-green rounded-b-2 bg=`${spaceColor}-700` flex-cc flex-wrap space-x-1.5 pt3)
+        each activity in activities
+          span(text-white uppercase font-mono bg="white/20" px-1.5 py0.5 rounded-1 mb3 text-3.5)= activity
+    
+
+mixin Separator()
+  div(h-4 bg-sky-400 w-full my12)
+
+mixin Curve(path)
+  svg(
+    w-full h-full
+    viewBox="0 0 100 100"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  )
+    path(
+      d=`${path} L 100 100 L 0 100 Z`
+      fill="currentColor"
+    )
+  
+mixin RepeatPattern(unitScale = 1, vwPx = 4, vhPx = 4, unit = 'rem')
+  - const ID = `id${Math.round(Math.random()*10000000)}`
+  - const aspectRatio = vwPx / vhPx
+  - const height = unitScale / 4
+  - const width = height * aspectRatio
+  svg(width="100%" height="100%" preserveAspectRatio="none")
+    defs
+      pattern(id=ID width=`${width}${unit}` height=`${height}${unit}` viewBox=`0 0 ${vwPx} ${vhPx}` patternUnits="userSpaceOnUse")
+        block 
+    rect(width="100%" height="100%" fill=`url(#${ID})`)
+
+mixin Header(title, subtitle, address)
+  div(bg-sky-100 w-full pb-12)
+    header(max-w-screen-md mx-auto pt12 flex w-full px6)
+      div(w-70% flex-grow flex-sc flex-col pr6)
+        h1[font-serif text-[clamp(2rem,10vw,6rem)] tracking-wider]= title
+        p[
+          font-italic font-mono text-3 sm:text-3.7
+          md:text-4.5/6 text-shadow-[0_1px_0_#ffff] mb6
+        ]= subtitle
+      div(w-40 md:w-60 flex-cc min-w-20)
+        a[w-full aspect-1/1 bg-amber-200 rounded-2 shadow-sm p1 outline-sky-500 focus-visible:outline-4 overflow-hidden group](relative target="_blank" href="https://maps.app.goo.gl/HdwsAqQAfjvNJ3yu7")
+          span[absolute top-0 left-0 opacity-0] Abrir en Google Maps
+          img[
+            size-full object-cover rounded-1 
+            saturate-50 transition-all
+            group-hover:(saturate-120 scale-150)
+            group-focus-visible:(saturate-120 scale-150) 
+          ](src="images/club-aereo/sm.webp" group-hover="saturate-120 scale-150")
+          div(absolute bottom-0 inset-x-0 h-50% flex-cc font-mono tracking-wider)
+              span(bg="white/80" group-hover="bg-white/100 shadow-md" text-center  text="[clamp(0.6rem,3vw,1rem)]" px2 rounded-1 whitespace-nowrap)
+                != address.join('<br/>')
+
+mixin FlexCol(num)
+  main(max-w-screen-lg mx-auto w-full px6)
+    div(grid gap-3 cols-1 md=`cols-${num}` w-full)
+      block
+
+mixin SuperButton(text)
+  a(href="" target="_blank" text-center block bg-amber-500 tracking-wider px-4 py-2 text-6  uppercase font-mono font-semibold hover="scale-103 bg-amber-400 duration-0" shadow-sm transition-all rounded-2 text-white text-shadow="[0_1px_0_#0007]" b="1 black/10" bg-gradient-to-br from="white/10")
+    =text
+
+mixin HH1()
+  h1(text-8 md:text-12 font-mono  font-bold text-white text-shadow="[0.5px_2px_0_#000f]" text-center)
+    block
+
+// # PÁGINA INICIO
+// ###############
+
+
++Page("Inicio")
+  +Header("Pantour", "Centro Deportivo Barrial", ["Sicilia 2332", "Punta Mogotes", "Mar del Plata"])
+
+  // # ESPACIOS
+  
+  div(w-full h-20vw bg-sky-200 -mt12 text-sky-100 -scale-y-100 -scale-x-100)
+    +Curve("M 0 20 C 15 20, 20 75, 40 70 S 65 65, 75 75 S 90 85, 100 80")
+  
+  +FlexCol(3)
+    each space in ESPACIOS
+      +Space2(space.name, space.img, space.color, space.activities)
+
+  // # SEPARADOR
+  
+  div(w-full mt12 text-sky-800 bg-sky-200 b-y-4 b-sky-100 relative shadow="[0_1.5px_1px_1px_#0006,0_0.5px_0_2px_#0002]" box-content)
+    div(b-y-1px  h-6 box-content b-black)
+      +RepeatPattern(6, 40, 20, 'rem')
+        path(
+          d=`M0 20 Q2 20 3 18 L18 2 Q20 0 22 2 L37 18 Q38 20 40 20 Z
+             M15 10 A5 5 0 1 0 25 10 A5 5 0 1 0 15 10 Z`
+          fill="currentColor" fill-rule="evenodd"
+        )
+        path(d="M0 5 A5 5 0 0 1 0 15" fill="currentColor")
+        path(d="M40 5 A5 5 0 0 0 40 15" fill="currentColor")
+
+  // # ANUNCIOS
+
+  mixin Flier(num = 0)
+    a(w-full aspect-0.7 href=FLIERS[num] target="_blank" hover="brightness-120")
+      img(src=FLIERS[num] size-full rounded-1 sm:rounded-2 shadow-sm object-cover bg="white/70")
+
+  mixin Box(klass = "")
+    div(class=klass)
+      block
+
+  - const gap = 'gap-3 md:gap-6'
+  +Box(`py12 px6 bg-sky-800 text-white w-full space-y-3 md:space-y-6`)
+    +HH1() Anuncios
+    +Box(`grid cols-2 sm:cols-4 ${gap} max-w-screen-md mx-auto`)
+      +Flier(0)
+      +Flier(1)
+      +Flier(2)
+      +Flier(3)
+    +Box(`grid cols-4 sm:cols-8 ${gap} max-w-screen-md mx-auto`)
+      +Flier(4)
+      +Flier(5)
+      +Flier(6)
+      +Flier(7)
+      +Flier(8)
+      +Flier(9)
+      +Flier(10)
+      +Flier(11)
+  
+  
+  // # SEPARADOR
+  
+  - const sectColor = 'sky-100'
+  div(w-full h-12 text=`${sectColor}` bg-sky-800 relative)
+    +RepeatPattern(12, 40, 22, 'rem')
+      path(
+        d=`M0 25 L0 20 Q2 20 3 18 L18 2 Q20 0 22 2 L37 18 Q38 20 40 20 L 40 25 Z
+           M15 10 A5 5 0 1 0 25 10 A5 5 0 1 0 15 10 Z`
+        fill="currentColor" fill-rule="evenodd"
+      )
+      path(d="M0 5 A5 5 0 0 1 0 15" fill="currentColor")
+      path(d="M40 5 A5 5 0 0 0 40 15" fill="currentColor")
+    
+  // # PROPUESTAS
+
+  
+  div(flex-cc bg=sectColor w-full flex-col px6 space-y-12 py12)
+    p(text-6 font-thin max-w-screen-sm mx-auto ) Todas las actividades del espacio fueron en algún momento una propuesta de alguien que pensó que estaría bueno usar el espacio para ello.<br/> ¿Tenés una idea en mente?
+    +SuperButton("Formulario de Propuestas")
+
+
+  // # SEPARADOR
+
+  div(w-full h-6 text-sky-200 bg=sectColor)
+    +RepeatPattern(6, 40, 20)
+      path(
+        d=`M0 20 Q2 20 3 18 L18 2 Q20 0 22 2 L37 18 Q38 20 40 20 Z
+           M15 10 A5 5 0 1 0 25 10 A5 5 0 1 0 15 10 Z`
+        fill="currentColor" fill-rule="evenodd"
+      )
+      path(d="M0 5 A5 5 0 0 1 0 15" fill="currentColor")
+      path(d="M40 5 A5 5 0 0 0 40 15" fill="currentColor")
+
+  // # EQUIPO ADMINISTRATIVO
+
+
+  mixin Person(name, src, tags)
+    a(href=src class="group" hover="-translate-y-10px" transition-transform)
+      div[bg-white p3 sm:p6 text-center rounded-t-100 rounded-b-4 font-mono font-bold shadow-sm]
+        div(w-full aspect-square mb3 sm:mb6)
+          img(src=src object-cover size-full rounded-full)
+        div(text-5 sm:text-6)= name
+      div(px-3)
+        div(w-full bg-sky-800 flex-cc flex-wrap pt-3 space-x-3 rounded-b-1 shadow-sm)
+          for tag in tags
+            span[bg-white/20 text-white mb-3 uppercase font-mono px-1.5 rounded-1]= tag
+          
+  
+  div(py-12 px6 flex-cc flex-col space-y-12)
+    +HH1() Equipo<br/>Administrativo
+    div(grid cols-2 sm:cols-3 gap-4)
+      for member in EQUIPO
+        +Person(member.name, member.img, member.tags)
+    p(text-6 font-thin max-w-screen-sm mx-auto ) ¿Querés formar parte del equipo administrativo?
+    +SuperButton("Formulario de Aplicantes")
+
+
+// # PÁGINA PISCINA
+// ###############
+
+
+
+
+  

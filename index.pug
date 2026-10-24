@@ -1,4 +1,5 @@
 :yaml
+  CNAME: pantour.webjam.space
   ICON: ❄️
   
   FLIERS:
@@ -77,9 +78,13 @@ mixin Space(title, imgSrc)
 mixin Space2(title, imgSrc, spaceColor = "sky", activities = [])
   div(flex flex-col)
     a(h-50 rounded-2.5 bg-white p1.5 class="group" focus-visible="bg-sky-500" outline-0 overflow-hidden shadow-sm relative href="/piscina")
-      div(size-full flex-cc relative overflow-hidden rounded-2 corner class="[corner-shape:bevel]")
-        // a(absolute inset-0 z-11 hover="bg-white/10"  class="peer" rounded-2.5 shadow="[inset_0_0_1px_4px_#ffff]")
-        h2(absolute rounded-full py2 px4 group-hover:scale-120 group-focus-visible:scale-120 duration-500 transition-transform z-10 text="7/8" text-center b-b="2px black/30" font-serif text-white bg="black/60" text-shadow="[0_1.5px_0_#000]")= title
+      div[flex-cc relative size-full corner overflow-hidden rounded-2 [corner-shape:bevel]]
+        h2[
+          absolute z-10 px4 py2
+          font-serif text-7/8 text-center text-shadow-[0_1.5px_0_#000] text-white
+          b-b-(2px black/30) bg-black/60 rounded-full duration-500 transition-transform
+          group-focus-visible:scale-120 group-hover:scale-120
+        ]= title
         img(absolute size-full top-0 left-0 z-9 src=imgSrc object-cover group-hover="saturate-100 scale-120" group-focus-visible="saturate-100 scale-120" transition-all brightness-180 saturate-40)
     div(px-3)
       div(mx-auto h-full bg-green rounded-b-2 bg=`${spaceColor}-700` flex-cc flex-wrap space-x-1.5 pt3)
@@ -117,12 +122,22 @@ mixin Header(title, subtitle, address)
   div(bg-sky-100 w-full pb-12)
     header(max-w-screen-md mx-auto pt12 flex w-full px6)
       div(w-70% flex-grow flex-sc flex-col pr6)
-        h1(text="[clamp(2rem,10vw,6rem)]" font-serif  tracking-wider)= title
-        p(font-italic font-mono text-3 sm:text-3.7 md:text-4.5/6 text-shadow="[0_1px_0_#ffff]" mb6)= subtitle
+        h1[font-serif text-[clamp(2rem,10vw,6rem)] tracking-wider]= title
+        p[
+          mb6 font-italic font-mono text-3 text-shadow-[0_1px_0_#ffff]
+          md:text-4.5/6 sm:text-3.7
+        ]= subtitle
       div(w-40 md:w-60 flex-cc min-w-20)
-        a(w-full aspect-1/1 bg-amber-200 rounded-2 shadow-sm p1 outline-sky-500 focus-visible:outline-4 overflow-hidden class="group" relative target="_blank" href="https://maps.app.goo.gl/HdwsAqQAfjvNJ3yu7")
-          span(absolute top-0 left-0 opacity-0) Abrir en Google Maps
-          img(src="images/club-aereo/sm.webp" size-full object-cover rounded-1 saturate-50 transition-all  group-hover="saturate-120 scale-150"  group-focus-visible="saturate-120 scale-150")
+        a[
+          p1 w-full
+          aspect-1/1 bg-amber-200 group outline-sky-500 overflow-hidden rounded-2 shadow-sm
+          focus-visible:outline-4
+        ](relative target="_blank" href="https://maps.app.goo.gl/HdwsAqQAfjvNJ3yu7")
+          span[absolute left-0 top-0 opacity-0] Abrir en Google Maps
+          img[
+            size-full object-cover rounded-1 saturate-50 transition-all
+            group-focus-visible:(saturate-120 scale-150) group-hover:(saturate-120 scale-150)
+          ](src="images/club-aereo/sm.webp" group-hover="saturate-120 scale-150")
           div(absolute bottom-0 inset-x-0 h-50% flex-cc font-mono tracking-wider)
               span(bg="white/80" group-hover="bg-white/100 shadow-md" text-center  text="[clamp(0.6rem,3vw,1rem)]" px2 rounded-1 whitespace-nowrap)
                 != address.join('<br/>')
@@ -236,14 +251,17 @@ mixin HH1()
 
   mixin Person(name, src, tags)
     a(href=src class="group" hover="-translate-y-10px" transition-transform)
-      div(bg-white p3 sm:p6 text-center rounded-t-100 rounded-b-4 font-mono font-bold shadow-sm )
+      div[
+        p3 font-bold font-mono text-center bg-white rounded-b-4 rounded-t-100 shadow-sm
+        sm:p6
+      ]
         div(w-full aspect-square mb3 sm:mb6)
           img(src=src object-cover size-full rounded-full)
         div(text-5 sm:text-6)= name
       div(px-3)
         div(w-full bg-sky-800 flex-cc flex-wrap pt-3 space-x-3 rounded-b-1 shadow-sm)
           for tag in tags
-            span(bg="white/20" text-white mb-3 uppercase font-mono px-1.5 rounded-1)= tag
+            span[mb-3 px-1.5 font-mono uppercase text-white bg-white/20 rounded-1]= tag
           
   
   div(py-12 px6 flex-cc flex-col space-y-12)
@@ -257,8 +275,5 @@ mixin HH1()
 
 // # PÁGINA PISCINA
 // ###############
-
-
-
 
   
